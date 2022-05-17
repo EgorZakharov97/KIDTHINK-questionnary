@@ -1,0 +1,217 @@
+@font-face { 
+	font-family: Whitney; 
+	src: url(../public/fonts/whitneymedium.otf) format("opentype"); 
+	font-weight: normal; 
+}
+
+@font-face { 
+	font-family: Whitney; 
+	src: url(../public/fonts/whitneybold.otf) format("opentype"); 
+	font-weight: bold;
+}
+
+html {
+  position: static;
+  height: auto;
+  overflow: auto;
+}
+
+:root {
+  --primary: #1DBBC4;
+  --purple: #604DA0;
+  --yellow: #DBE68C;
+  --orange: #F4795E;
+  --red: #EF6D7B;
+  --drag-maze: 36px;
+}
+
+#container {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  font-family: Whitney;
+}
+
+/* Slider */
+.horizontal-slider {
+  width: 100%;
+  height: var(--drag-maze);
+  margin: auto;
+}
+.example-thumb {
+  cursor: pointer;
+  position: absolute;
+  z-index: 100;
+  background: var(--yellow);
+  border: 5px solid var(--red);
+  border-radius: 100%;
+  display: block;
+}
+.example-thumb.active {
+  background-color: var(--yellow);
+}
+.example-track {
+  position: relative;
+  background: var(--primary);
+}
+.example-track.example-track-0 {
+  background: var(--red);
+}
+.horizontal-slider .example-track {
+  top: 20px;
+  height: 4px;
+}
+.horizontal-slider .example-thumb {
+  top: 0;
+  outline: none;
+  position: relative;
+  width: var(--drag-maze);
+  height: var(--drag-maze);
+  line-height: 38px;
+}
+
+.horizontal-slider .example-thumb:after {
+  content: "";
+  background-image: url("https://www.kidthink.ca/wp-content/uploads/2022/04/Path-0.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border-radius: 100%;
+  z-index: 101;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--drag-maze);
+  height: var(--drag-maze);
+}
+
+.slider {
+  margin: 0 auto;
+}
+
+.scale {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 0 calc(var(--drag-maze)/2);
+}
+
+.scale > p {
+  width: 2%;
+  color:#127a80;
+}
+
+@media only screen and (max-width: 500px) {
+  body {
+    --drag-maze: 24px;  
+  }
+
+  .horizontal-slider .example-thumb {
+    top: 4px;
+  }
+}
+
+/* Question */
+.q-header, .q-header > div {
+  display: flex;
+  align-items: center;
+}
+
+.q-header input {
+  margin-right: .5rem;
+}
+
+.q-header {
+  justify-content: space-between;
+}
+
+.q-header h3, .q-header label {
+  font-size: 1.8rem;
+  margin-bottom: .75rem;
+  font-weight: 500;
+}
+
+.icon-d-wrapper {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary);
+  border-radius: 100%;
+  margin: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-d {
+  color: var(--primary);
+  font-size: 18px;
+}
+
+.d-window {
+  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+  padding: .5rem;
+  border-radius: 12px;
+  background-color: var(--yellow);
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 120px;
+  transform: translate(-100%, 100%);
+  cursor: default;
+  z-index: 999;
+}
+
+.window-wrapper {
+  position: relative;
+}
+
+.question {
+  margin-bottom: 1rem;
+  padding: .75rem 2rem .75rem .75rem;
+  border-radius: 8px;
+}
+
+.q-section {
+  border-top: 1px solid var(--yellow);
+  padding: .25rem 0;
+  margin: 2rem 0;
+}
+
+.q-submit {
+  width: 100%;
+}
+
+.q-submit button {
+  display: block;
+  margin: 0 auto;
+  background-color: var(--primary);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 800;
+  border: none;
+  padding: .5rem 2rem;
+  border-radius: 18px;
+}
+
+/* Dropdpown component */
+.dropdown {
+  width: 100%;
+}
+
+.dropdown button {
+  width: 100%;
+  background-color: transparent;
+  color: var(--primary);
+  border: 0;
+  margin-bottom: 10px;
+}
+
+.dropdown > div {
+  padding: 0.5rem 2rem 1rem;
+  background-color: rgba(63, 238, 251, 0.287);
+  display: block;
+  line-height: 1.6;
+  overflow: hidden;
+}
