@@ -22,7 +22,7 @@ html {
   --yellow: #DBE68C;
   --orange: #F4795E;
   --red: #EF6D7B;
-  --drag-maze: 36px;
+  --drag-maze: 18px;
 }
 
 #container {
@@ -30,6 +30,17 @@ html {
   width: 100%;
   margin: 0 auto;
   font-family: Whitney;
+  box-sizing: content-box;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 /* Slider */
@@ -41,51 +52,29 @@ html {
 .example-thumb {
   cursor: pointer;
   position: absolute;
-  z-index: 100;
+  z-index: 999;
   background: var(--yellow);
-  border: 5px solid var(--red);
+  border: 6px solid var(--red);
   border-radius: 100%;
   display: block;
 }
-.example-thumb.active {
+/* .example-thumb.active {
   background-color: var(--yellow);
-}
+} */
 .example-track {
-  position: relative;
   background: var(--primary);
 }
 .example-track.example-track-0 {
   background: var(--red);
 }
 .horizontal-slider .example-track {
-  top: 20px;
+  transform: translateY(12px);
   height: 4px;
 }
 .horizontal-slider .example-thumb {
-  top: 0;
-  outline: none;
-  position: relative;
+
   width: var(--drag-maze);
   height: var(--drag-maze);
-  line-height: 38px;
-}
-
-.horizontal-slider .example-thumb:after {
-  content: "";
-  background-image: url("https://www.kidthink.ca/wp-content/uploads/2022/04/Path-0.svg");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  border-radius: 100%;
-  z-index: 101;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--drag-maze);
-  height: var(--drag-maze);
-}
-
-.slider {
-  margin: 0 auto;
 }
 
 .scale {
@@ -93,11 +82,6 @@ html {
   align-items: flex-start;
   justify-content: space-between;
   margin: 0 calc(var(--drag-maze)/2);
-}
-
-.scale > p {
-  width: 2%;
-  color:#127a80;
 }
 
 @media only screen and (max-width: 500px) {
@@ -114,10 +98,24 @@ html {
 .q-header, .q-header > div {
   display: flex;
   align-items: center;
+  justify-content: left;
+  align-content: center;
 }
 
 .q-header input {
   margin-right: .5rem;
+}
+
+.q-header button {
+  --size: 2rem;
+  background-color: transparent;
+  border: none;
+  padding: calc(var(--size)/4);
+  margin-left: calc(var(--size)/4);
+  font-weight: 300;
+  font-size: 2rem;
+  opacity: 0.7;
+  color: var(--primary);
 }
 
 .q-header {
@@ -126,7 +124,7 @@ html {
 
 .q-header h3, .q-header label {
   font-size: 1.8rem;
-  margin-bottom: .75rem;
+  margin: 0;
   font-weight: 500;
 }
 
@@ -150,17 +148,30 @@ html {
 .d-window {
   transition: all 0.3s ease-in-out;
   font-size: 14px;
-  padding: .5rem;
+  padding: .5rem 1rem;
   border-radius: 12px;
-  background-color: var(--yellow);
+  background-color: #1DBBC4;
   color: white;
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 120px;
+  width: 400px;
+  font-size: 16px;
   transform: translate(-100%, 100%);
   cursor: default;
   z-index: 999;
+}
+
+.d-window b {
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 2.4rem;
+  padding: 0.25rem 6rem 0.25rem 0;
+  border-bottom: 2px solid var(--primary);
+  margin-bottom: 1.5rem;
+  display: inline-block;
 }
 
 .window-wrapper {
@@ -169,12 +180,11 @@ html {
 
 .question {
   margin-bottom: 1rem;
-  padding: .75rem 2rem .75rem .75rem;
   border-radius: 8px;
 }
 
 .q-section {
-  border-top: 1px solid var(--yellow);
+  border-bottom: 1px solid var(--yellow);
   padding: .25rem 0;
   margin: 2rem 0;
 }
@@ -209,9 +219,10 @@ html {
 }
 
 .dropdown > div {
-  padding: 0.5rem 2rem 1rem;
+  padding: 1rem 2rem;
   background-color: rgba(63, 238, 251, 0.287);
   display: block;
   line-height: 1.6;
   overflow: hidden;
+  border-radius: 6px;
 }

@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
+import { useSpring, animated } from "react-spring";
 
 function Details({ description }) {
-    const [opacity, setOpacity] = useState("0%");
+    const [isVisible, setIsVisible] = useState(false);
 
     const toggle = () => {
-        setOpacity(opacity === "0%" ? "100%" : "0%");
+        setIsVisible(!isVisible);
     }
+
+    const fade = useSpring({
+        from: { visibility: "hidden", opacity: "0" },
+        to: { opacity: isVisible ? "1" : "0", visibility: isVisible ? "visible" : "hidden" },
+        config: { duration: "300" }
+    })
 
     return (
         <div className='window-wrapper'>
             <div onMouseEnter={toggle} onMouseLeave={toggle} className='icon-d-wrapper'>
                 <div className='icon-d'>i</div>
             </div>
-            <div style={{opacity}} className='d-window'>
+            <animated.div style={fade} className='d-window'>
                 {description}
-            </div>
+            </animated.div>
         </div>
     )
 }

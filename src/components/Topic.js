@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Section from './Section';
 import Question from './Question';
 import TextSlider from './TextSlider';
-import Dropdown from './Dropdown';
 
 export default function Topic(props){
     const [answers, setAnswers] = useState([]);
@@ -34,8 +33,7 @@ export default function Topic(props){
                     return (
                         <Question
                             key={i}
-                            title={question.title}
-                            description={<div>{props.boundaries.map((b, i) => (b.description && <p key={i}>{b.name} - {b.description}</p>))}</div>}
+                            question={question}
                         >
                             <TextSlider
                                 key={i}
@@ -45,7 +43,6 @@ export default function Topic(props){
                                     setAnswers(newAnswer);
                                 }}
                             />
-                            {question.description && <Dropdown><p>{question.description}</p></Dropdown>}
                         </Question>
                     )
                 })
