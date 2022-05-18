@@ -26,7 +26,7 @@ function Question({ question , children}) {
             <div className='q-header'>
                 <div>
                     <h3>{question.title}</h3>
-                    { question.description && <animated.button style={rotateAnimation} onClick={toggle}><img height="24px" width="24px" src="https://www.kidthink.ca/wp-content/uploads/2022/04/Screenshot-2022-04-27-100751.svg" /></animated.button>}
+                    { question.description && <animated.button style={rotateAnimation} onClick={toggle}><img height="32px" width="32px" src="https://www.kidthink.ca/wp-content/uploads/2022/04/Screenshot-2022-04-27-100751.svg" /></animated.button>}
                 </div>
                 <Details description={<div>
                     <p><b>Low</b> - Present but not exhibited in last 3 days</p>

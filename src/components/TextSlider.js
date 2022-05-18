@@ -21,11 +21,11 @@ function TextSlider({ setScore }) {
             max={4}
         />
         <div className='scale'>
-            <p className='noselect'>Not Present</p>
-            <p className='noselect'>Low</p>
-            <p className='noselect'>Mild</p>
-            <p className='noselect'>Moderate</p>
-            <p className='noselect'>Severe</p>
+            <div><p onClick={() => (setValue(0))} className='noselect'>Not Present</p></div>
+            <div><p onClick={() => (setValue(1))} className='noselect'>Low</p></div>
+            <div><p onClick={() => (setValue(2))} className='noselect'>Mild</p></div>
+            <div><p onClick={() => (setValue(3))} className='noselect'>Moderate</p></div>
+            <div><p onClick={() => (setValue(4))} className='noselect'>Severe</p></div>
         </div>
     </div>
     );
