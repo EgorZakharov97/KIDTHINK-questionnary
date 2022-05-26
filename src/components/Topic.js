@@ -8,26 +8,28 @@ export default function Topic(props){
 
     useEffect(() => {
         const score = answers.reduce((acc, v) => (Boolean(v) ? acc+v : acc), 0);
-        const boundary = calculateBoundaty(score);
+        const [boundary, id] = calculateBoundaty(score);
         props.setScore({
-            name: props.name,
+            name: props.topic,
             score,
             boundary,
+            id
         })
     }, [answers]);
 
     const calculateBoundaty = (score) => {
-        return props.boundaries.filter((b) => {
-            if (b.minValue === undefined && score === 0) return true; // Not Present
-            if (b.minValue !== undefined && b.maxValue !== undefined && score >= b.minValue && score <= b.maxValue) return true; // Something in between
-            if (b.maxValue === undefined && score >= b.minValue) return true // Severe
+        let indexes = [];
+        const topic = props.boundaries.filter((b, i) => {
+            if (b.maxValue >= score) { indexes.push(i); return true } // Something in between
             else return false;
-        })[0].name;
+        })[0];
+        const boundary = topic ? topic.name : props.boundaries[props.boundaries.length-1].name;
+        return [boundary, indexes[0]];
     }
 
     return(
         <Section>
-            <h2>{props.name}</h2>
+            <h2>{props.topic}</h2>
             {
                 props.questions.map((question, i) => {
                     return (
@@ -37,6 +39,7 @@ export default function Topic(props){
                         >
                             <TextSlider
                                 key={i}
+                                title={question.title}
                                 setScore={(value) => {
                                     const newAnswer = [...answers];
                                     newAnswer[i] = value;

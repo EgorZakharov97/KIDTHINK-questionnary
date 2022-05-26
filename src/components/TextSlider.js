@@ -1,12 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import ReactSlider from 'react-slider';
+import useLocalStorage from '../hooks/useLocalStorage';
+import EventEmitter from '../utils/EventEmitter';
+import { getSlug } from '../utils/lib';
 
-function TextSlider({ setScore }) {
-    const [value, setValue] = useState(0);
+if (!String.prototype.hashCode) {
+    String.prototype.hashCode = function() {
+        var hash = 0;
+        for (var i = 0; i < this.length; i++) {
+            var char = this.charCodeAt(i);
+            hash = ((hash<<5)-hash)+char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash;
+    }
+}
+
+const slug = getSlug();
+
+function TextSlider({ title, setScore }) {
+    const [value, setValue] = useLocalStorage((slug + title).hashCode(), 0);
 
     useEffect(() => {
         setScore(value)
-    }, [value])
+    }, [value]);
+
+    useEffect(() => {
+        const flush = () => { setValue(0) }
+        const listener = EventEmitter.addListener('flush', flush);
+        return () => { listener.remove() }
+    }, [])
 
     return (
     <div className='slider'>
