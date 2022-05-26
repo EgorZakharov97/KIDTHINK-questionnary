@@ -10,16 +10,15 @@ import { getSlug } from './utils/lib';
 import { BASE_URL } from './config';
 
 function App() {
-  const [answered, setAnswered] = useLocalStorage("answered", false);
+  const [answered, setAnswered] = useLocalStorage((getSlug() + "/answered"), false);
   const [confirm, setConfirm] = useState(false);
   const [fetching, setFetching] = useState(false);
-  const [questions, setQuestions] = useLocalStorage("questions", []);
-  const [scores, setScores] = useLocalStorage("scores", null);
+  const [questions, setQuestions] = useLocalStorage((getSlug() + "/questions"), []);
+  const [scores, setScores] = useLocalStorage((getSlug() + "/scores"), null);
 
   const fetchQuestions = async () => {
     setFetching(true);
-    const slug = getSlug;
-    const res = await fetch(BASE_URL + slug);
+    const res = await fetch(BASE_URL + '/wp-json/wp/v2/pages?slug=' + getSlug());
     const data = await res.json();
     setFetching(false);
     return data[0].acf.questionnaire;
@@ -31,6 +30,7 @@ function App() {
       score: 0,
       boundary: "Not Present",
       id: 0,
+      answers: []
     })))
   }
 
@@ -47,7 +47,6 @@ function App() {
     if (fetching) return;
     fetchQuestions()
       .then((q) => {
-        console.log(q)
         if (!areSame(questions, q)) {
           console.log("Flush");
           setQuestions(q);
@@ -84,6 +83,7 @@ function App() {
         </div>
       </Section>
       <div>
+      { answered && <button onClick={flush}>Reset Questionnary?</button>}
       { Boolean(scores) &&
         questions.map((topic, i) => {
           return <Topic 

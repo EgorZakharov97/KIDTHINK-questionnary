@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import Section from './Section';
+import GravityForm from "react-gravity-form";
+import { BASE_URL, QUESTIONS_FORM_ID } from '../config';
 
 export default function({ scores }) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+
+    const onSubmit = async () => {
+
+    }
 
     return(
         <Section>

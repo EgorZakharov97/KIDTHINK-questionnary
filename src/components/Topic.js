@@ -4,7 +4,7 @@ import Question from './Question';
 import TextSlider from './TextSlider';
 
 export default function Topic(props){
-    const [answers, setAnswers] = useState([]);
+    const [answers, setAnswers] = useState(Array(props.questions.length).fill(0));
 
     useEffect(() => {
         const score = answers.reduce((acc, v) => (Boolean(v) ? acc+v : acc), 0);
@@ -13,7 +13,8 @@ export default function Topic(props){
             name: props.topic,
             score,
             boundary,
-            id
+            id,
+            answers
         })
     }, [answers]);
 
@@ -24,7 +25,8 @@ export default function Topic(props){
             else return false;
         })[0];
         const boundary = topic ? topic.name : props.boundaries[props.boundaries.length-1].name;
-        return [boundary, indexes[0]];
+        let index = indexes[0] ? indexes[0] : props.boundaries.length-1
+        return [boundary, index];
     }
 
     return(

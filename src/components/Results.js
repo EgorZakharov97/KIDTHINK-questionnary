@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Section from './Section';
+import { SUBMIT_ANONIMOUS } from '../config';
+import { submitAnonimous } from '../utils/submitGForms';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { getSlug } from '../utils/lib';
+import EventEmitter from '../utils/EventEmitter';
 
-export default function Results({ scores, quiz }) {
+export default function Results({ quiz, scores }) {
+    const [wasUploaded, setUploaded] = useLocalStorage((getSlug() + '/wasUploaded'), false);
     
     const getResultForTopic = (i) => {
-        console.log(quiz)
         const id = scores[i].id;
         const result = quiz[i].boundaries[id].resultText;
         return result;
     }
+
+    useEffect(() => {
+        const flush = () => { setUploaded(false) }
+        const listener = EventEmitter.addListener('flush', flush);
+        return () => { listener.remove() }
+    }, [])
+
+    useEffect(() => {
+        if (!SUBMIT_ANONIMOUS || wasUploaded) return;
+        submitAnonimous(quiz, scores);
+        setUploaded(true);
+    })
 
     return(
         <Section>
