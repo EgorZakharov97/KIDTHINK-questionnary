@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Section(props) {
     return (
-        <section className="q-section">
+        <section id={props.id} className={`q-section ${props.className}`}>
             {props.children}
         </section>
     )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ReactSlider from 'react-slider';
 import useLocalStorage from '../hooks/useLocalStorage';
 import EventEmitter from '../utils/EventEmitter';
@@ -44,11 +44,11 @@ function TextSlider({ title, setScore }) {
             max={4}
         />
         <div className='scale'>
-            <div><p onClick={() => (setValue(0))} className='noselect'>Not Present</p></div>
-            <div><p onClick={() => (setValue(1))} className='noselect'>Low</p></div>
-            <div><p onClick={() => (setValue(2))} className='noselect'>Mild</p></div>
-            <div><p onClick={() => (setValue(3))} className='noselect'>Moderate</p></div>
-            <div><p onClick={() => (setValue(4))} className='noselect'>Severe</p></div>
+            <div><p onClick={() => (setValue(0))} className={`noselect ${value === 0 ? "selected" : ""}`}>Not Present</p></div>
+            <div><p onClick={() => (setValue(1))} className={`noselect ${value === 1 ? "selected" : ""}`}>Low</p></div>
+            <div><p onClick={() => (setValue(2))} className={`noselect ${value === 2 ? "selected" : ""}`}>Mild</p></div>
+            <div><p onClick={() => (setValue(3))} className={`noselect ${value === 3 ? "selected" : ""}`}>Moderate</p></div>
+            <div><p onClick={() => (setValue(4))} className={`noselect ${value === 4 ? "selected" : ""}`}>Severe</p></div>
         </div>
     </div>
     );

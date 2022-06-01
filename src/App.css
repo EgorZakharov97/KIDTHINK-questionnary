@@ -18,14 +18,15 @@ html {
 
 :root {
   --primary: #1DBBC4;
+  --theme-light: #6ad2d8;
   --purple: #604DA0;
-  --yellow: #DBE68C;
+  --yellow: #e0e9a3;
   --orange: #F4795E;
   --red: #EF6D7B;
   --drag-maze: 24px;
 }
 
-#container {
+.container {
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
@@ -84,17 +85,24 @@ html {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin: 0 calc(var(--drag-maze)/2);
+  margin: 1.25rem calc(var(--drag-maze)/2);
+  padding: 0 0.25rem;
 }
 
 .scale > div {
   overflow: visible;
   width: var(--drag-maze);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 .scale p {
-  padding: 24px 24px 24px 0;
+  cursor: pointer;
+  height: 3rem;
   margin: 0;
+  transition: all 0.3s ease-in-out;
 }
 
 @media only screen and (max-width: 500px) {
@@ -133,6 +141,7 @@ html {
 
 .q-header {
   justify-content: space-between;
+  height: 3rem;
 }
 
 .q-header h3, .q-header label {
@@ -238,4 +247,88 @@ h2 {
   line-height: 1.6;
   overflow: hidden;
   border-radius: 6px;
+}
+
+.scale .selected {
+  color: var(--red);
+}
+
+.disclaimer-text {
+  padding: 0;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.disclaimer input[type=checkbox] {
+  margin-right: 8px;
+  margin-bottom: 1rem;
+}
+
+.submit {
+  margin-bottom: 1rem;
+}
+
+button {
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  padding: 14px 20px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+button:disabled {
+  background-color: var(--theme-light);
+}
+
+.personal-info {
+  background-color: var(--yellow);
+  padding: 3rem 1rem;
+}
+
+.personal-info label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.personal-info strong {
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+
+.personal-info > div {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.personal-info input,
+.personal-info textarea {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--primary);
+  border-radius: 3px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.personal-info input[type=checkbox] {
+  display: inline;
+  width: auto;
+  margin-right: 8px;
+}
+
+.inline {
+  display: inline !important;
+  width: auto;
+}
+
+#p-submit {
+  display: flex;
+  padding-top: 1.4rem;
+}
+
+#p-submit p {
+  padding-left: 12px;
 }

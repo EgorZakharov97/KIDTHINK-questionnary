@@ -8,6 +8,7 @@ import EventEmitter from './utils/EventEmitter';
 import Results from './components/Results';
 import { getSlug } from './utils/lib';
 import { BASE_URL } from './config';
+import Loading from './components/Loading';
 
 function App() {
   const [answered, setAnswered] = useLocalStorage((getSlug() + "/answered"), false);
@@ -38,6 +39,7 @@ function App() {
     EventEmitter.emit('flush');
     setAnswered(false);
   }
+  window.flush = flush;
 
   const areSame = (obj1, obj2) => {
     return (JSON.stringify(obj1) === JSON.stringify(obj2))
@@ -48,60 +50,59 @@ function App() {
     fetchQuestions()
       .then((q) => {
         if (!areSame(questions, q)) {
-          console.log("Flush");
           setQuestions(q);
           setInitialScores(q);
           flush();
         } else {
-          console.log("Nothing to update")
+
         }
       })
-  }, [])
-
+  }, []);
 
   const submit = () => {
-    // TODO: Send results to form here
-    console.log(scores);
+    EventEmitter.emit('submit');
     setAnswered(true);
   }
 
   if(fetching && !questions.length) return (
-    <div>
-      Loading...
+    <div style={{margin: "0 auto"}}>
+      <Loading/>
     </div>
   )
 
   return (
     <div>
-      <Section>
-        <h2>Okay you have to confirm</h2>
+      <div className='container'>
         <div>
-          <p>Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nibh vel posuere imperdiet. Phasellus ut aliquam velit. Suspendisse volutpat lacus tortor, ultricies commodo dui varius eget. Morbi dictum iaculis sapien id malesuada. Curabitur eget convallis ante. Sed ac libero id nisl suscipit ullamcorper. Ut ut elementum nibh. Nulla facilisi. Aliquam faucibus malesuada ipsum ut volutpat.</p>
-          <h3>I confirm that everything is okay and I will not complain</h3>
-          <input type="checkbox" name="confirmation" id="confirm" value={confirm} onChange={() => {setConfirm(!confirm)}} />
-          <label htmlFor="confirm">Confirm</label>
+        {/* { answered && <button onClick={flush}>Reset Questionnary?</button>} */}
+        { Boolean(scores) &&
+          questions.map((topic, i) => {
+            return <Topic 
+              key={i} 
+              {...topic}
+              setScore={(score) => {
+                const newScore = [...scores];
+                newScore[i] = score;
+                setScores(newScore);
+              }}
+            />
+          })
+        }
+        { !answered &&
+          <Section>
+            <h2>Before you Submit</h2>
+            <div className="disclaimer">
+              <p>Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nibh vel posuere imperdiet. Phasellus ut aliquam velit. Suspendisse volutpat lacus tortor, ultricies commodo dui varius eget. Morbi dictum iaculis sapien id malesuada. Curabitur eget convallis ante. Sed ac libero id nisl suscipit ullamcorper. Ut ut elementum nibh. Nulla facilisi. Aliquam faucibus malesuada ipsum ut volutpat.</p>
+              <input type="checkbox" name="confirmation" id="confirm" value={confirm} onChange={() => {setConfirm(!confirm)}} />
+              <label htmlFor="confirm">I confirm that KIDTHINK can collect and store answers to this quiz anonimously</label>
+            </div>
+            <button className="submit" disabled={!confirm} onClick={submit}>Submit</button>
+          </Section>
+        }
         </div>
-      </Section>
-      <div>
-      { answered && <button onClick={flush}>Reset Questionnary?</button>}
-      { Boolean(scores) &&
-        questions.map((topic, i) => {
-          return <Topic 
-            key={i} 
-            {...topic}
-            setScore={(score) => {
-              const newScore = [...scores];
-              newScore[i] = score;
-              setScores(newScore);
-            }}
-          />
-        })
-      }
-      <button disabled={!confirm} onClick={submit}>Submit</button>
-      { !confirm && <p>Please confirm that you are agree</p>}
-    </div>
-    { answered && <Results quiz={questions} scores={scores}/> }
-    { answered && <PersonalInformation/> }
+        { answered && <Results submitted={answered} quiz={questions} scores={scores}/> }
+      </div>
+        { answered && <PersonalInformation quiz={questions} scores={scores} /> }
     </div>
   )  
 }

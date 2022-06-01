@@ -21,11 +21,11 @@ export default function Topic(props){
     const calculateBoundaty = (score) => {
         let indexes = [];
         const topic = props.boundaries.filter((b, i) => {
-            if (b.maxValue >= score) { indexes.push(i); return true } // Something in between
+            if (b.maxValue >= score) { indexes.push(i); return true }
             else return false;
         })[0];
         const boundary = topic ? topic.name : props.boundaries[props.boundaries.length-1].name;
-        let index = indexes[0] ? indexes[0] : props.boundaries.length-1
+        let index = indexes.length ? indexes[0] : props.boundaries.length-1;
         return [boundary, index];
     }
 
