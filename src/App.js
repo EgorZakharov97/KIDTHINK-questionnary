@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Topic from './components/Topic';
-import Section from './components/Section';
+import div from './components/Section';
 import PersonalInformation from './components/PersonalInformation';
 import useLocalStorage from './hooks/useLocalStorage';
 import EventEmitter from './utils/EventEmitter';
@@ -74,6 +74,12 @@ function App() {
     <div>
       <div className='container'>
         <div>
+        <div className="disclaimer">
+          <h3>Disclaimer</h3>
+          <p>Disclaimer: Kidthink Children’s Mental Health Centre Inc. and its sponsors, partners, and other associates disclaim any liability, loss, or risk incurred as a consequence, directly or indirectly, from the use and application of this questionnaire and the resulting resource recommendations.</p>
+          <input type="checkbox" name="confirmation" id="confirm" checked={confirm} onChange={() => {setConfirm(!confirm)}} />
+          <label htmlFor="confirm">I confirm that I have read, understood, and agreed with the above disclaimer.</label>
+        </div>
         {/* { answered && <button onClick={flush}>Reset Questionnary?</button>} */}
         { Boolean(scores) &&
           questions.map((topic, i) => {
@@ -89,15 +95,15 @@ function App() {
           })
         }
         { !answered &&
-          <Section>
-            <h2>Before you Submit</h2>
+          <div>
+            <h3>Disclaimer</h3>
             <div className="disclaimer">
-              <p>Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nibh vel posuere imperdiet. Phasellus ut aliquam velit. Suspendisse volutpat lacus tortor, ultricies commodo dui varius eget. Morbi dictum iaculis sapien id malesuada. Curabitur eget convallis ante. Sed ac libero id nisl suscipit ullamcorper. Ut ut elementum nibh. Nulla facilisi. Aliquam faucibus malesuada ipsum ut volutpat.</p>
-              <input type="checkbox" name="confirmation" id="confirm" value={confirm} onChange={() => {setConfirm(!confirm)}} />
-              <label htmlFor="confirm">I confirm that KIDTHINK can collect and store answers to this quiz anonimously</label>
+              <p>Disclaimer: Kidthink Children’s Mental Health Centre Inc. and its sponsors, partners, and other associates disclaim any liability, loss, or risk incurred as a consequence, directly or indirectly, from the use and application of this questionnaire and the resulting resource recommendations.</p>
+              <input type="checkbox" name="confirmation" id="confirm" checked={confirm} onChange={() => {setConfirm(!confirm)}} />
+              <label htmlFor="confirm">I confirm that I have read, understood, and agreed with the above disclaimer.</label>
             </div>
             <button className="submit" disabled={!confirm} onClick={submit}>Submit</button>
-          </Section>
+          </div>
         }
         </div>
         { answered && <Results submitted={answered} quiz={questions} scores={scores}/> }
